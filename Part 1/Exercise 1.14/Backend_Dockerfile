@@ -1,0 +1,17 @@
+FROM golang:1.16-alpine
+
+ENV REQUEST_ORIGIN=http://localhost:5000
+
+RUN apk add build-base
+
+WORKDIR /app
+
+COPY . .
+
+COPY material-applications/example-backend/ .
+
+RUN go build -o server .
+
+EXPOSE 8080
+
+CMD ["./server"]
