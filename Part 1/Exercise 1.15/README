@@ -1,0 +1,7 @@
+This is an assignment for MOOC.fi course DevOps with Docker.
+
+The following link has a simple currency converter react app made by me in dockerhub: https://hub.docker.com/r/valeriot015/currency-converter
+
+Usage: Pull the image with docker pull valeriot015/currency-converter
+
+Run the container and the currency converter will be available at localhost:5000.
