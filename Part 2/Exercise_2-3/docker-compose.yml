@@ -1,0 +1,19 @@
+services:
+    
+  example-frontend:
+    build: 
+      context: .
+      dockerfile: ./Frontend_Dockerfile
+    ports:
+      - 5000:5000
+    container_name: example-frontend
+    
+  example-backend:
+    build:
+      context: .
+      dockerfile: ./Backend_Dockerfile
+    ports:
+      - 8080:8080
+    container_name: example-backend
+    
+    
