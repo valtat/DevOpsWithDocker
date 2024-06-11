@@ -1,0 +1,43 @@
+services:
+    
+  example-frontend:
+    build: 
+      context: .
+      dockerfile: ./Frontend_Dockerfile
+    ports:
+      - 5000:5000
+    container_name: example-frontend
+    
+  example-backend:
+    build:
+      context: .
+      dockerfile: ./Backend_Dockerfile
+    ports:
+      - 8080:8080
+    container_name: example-backend
+    
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    container_name: redis
+  
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: example
+    container_name: db_postgres
+    volumes:
+    - ./host/datadir:/var/lib/postgresql/data
+  
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - example-frontend
+      - example-backend
