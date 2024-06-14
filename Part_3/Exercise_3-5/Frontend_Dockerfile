@@ -1,0 +1,24 @@
+FROM node:16.20.1-alpine
+
+ENV REACT_APP_BACKEND_URL=http://localhost:80/api
+
+WORKDIR /app
+
+COPY material-applications/example-frontend/ .
+
+RUN npm install
+
+RUN npm run build
+
+RUN npm install -g serve
+
+RUN adduser -D -h /home/appuser -s /bin/sh appuser
+
+RUN chown -R appuser /app
+
+USER appuser
+
+EXPOSE 5000
+
+CMD ["serve", "-s", "build", "-l", "5000"]
+

@@ -1,0 +1,27 @@
+FROM golang:1.16-alpine
+
+ENV REQUEST_ORIGIN=http://localhost
+ENV REDIS_HOST=redis
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=example
+ENV POSTGRES_DATABASE=postgres
+ENV POSTGRES_HOST=db
+
+RUN apk add --no-cache build-base
+
+WORKDIR /app
+
+COPY material-applications/example-backend/ .
+
+RUN go build -o server .
+
+RUN adduser -D -h /home/dbuser -s /bin/sh dbuser
+
+RUN chown -R dbuser:dbuser /app
+
+USER dbuser
+
+EXPOSE 8080
+
+CMD ["./server"]
+
